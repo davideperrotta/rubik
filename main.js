@@ -27,15 +27,31 @@ scene.add(cube);
 // Funzione per creare un cubie
 function createCubie(x, y, z) {
   const geometry = new THREE.BoxGeometry();
-  const normalMap = new THREE.TextureLoader().load('javascript.svg');
+  //const normalMap = new THREE.TextureLoader().load('javascript.svg');
   //const material = new THREE.MeshStandardMaterial({ color: color, normalMap });
+
+  // Creazione della canvas e disegno del testo
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  canvas.width = 256;
+  canvas.height = 256;
+
+  context.font   
+  = "30px Arial";
+  context.fillStyle = "pink";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(`${x},${y},${z}`, 128, 128);
+
+  const normalMap = new THREE.CanvasTexture(canvas);
+
   const materials = [
-    new THREE.MeshStandardMaterial({ color: 'red', normalMap }),
-    new THREE.MeshStandardMaterial({ color: 'green', normalMap }),
-    new THREE.MeshStandardMaterial({ color: 'blu', normalMap }),
-    new THREE.MeshStandardMaterial({ color: 'orange', normalMap }),
-    new THREE.MeshStandardMaterial({ color: 'yellow', normalMap }),
     new THREE.MeshStandardMaterial({ color: 'white', normalMap }),
+    new THREE.MeshStandardMaterial({ color: 'yellow', normalMap }),
+    new THREE.MeshStandardMaterial({ color: 'blue', normalMap }),
+    new THREE.MeshStandardMaterial({ color: 'green', normalMap }),
+    new THREE.MeshStandardMaterial({ color: 'red', normalMap }),
+    new THREE.MeshStandardMaterial({ color: 'orange', normalMap }),
 ];
   const cubie = new THREE.Mesh(geometry, materials);
   cubie.position.set(x, y, z);
@@ -71,4 +87,5 @@ function animate() {
   rubikCube.rotation.z += 0.02; // Rotazione continua
   renderer.render(scene, camera);
 }
+
 animate();
